@@ -3,26 +3,26 @@ class Dog {
         Object.assign(this, data)
     }
 
-    showStatusHtml(status) {
-        const { name, avatar, age, bio } = this
-        const result = status ? 'images/badge-like.png' : 'images/badge-nope.png'
-        console.log('been liked?', status)
+    isLiked() {
+        this.hasBeenLiked = true
+    }
+
+    isRejected() {
+        this.hasBeenLiked = false
+    }
+
+    getBadgeHtml() {
+        const result = this.hasBeenLiked ? 'images/badge-like.png' : 'images/badge-nope.png'
         return `
-            <div class="dog-profile">
             <img class="badge" src="${result}" />
-                <div class="dog-desc">
-                    <h3>${name}, ${age}</h3>
-                    <p>${bio}</p>
-                </div>
-                <img src="${avatar}" />
-            </div>
             `
     }
 
-    getDogHtml() {
+    getDogHtml(status) {
         const { name, avatar, age, bio } = this
         return `
             <div class="dog-profile">
+            ${status ? this.getBadgeHtml() : ''}
                 <div class="dog-desc">
                     <h3>${name}, ${age}</h3>
                     <p>${bio}</p>

@@ -25,19 +25,18 @@ function setSwiped(status) {
     isWaiting = true
     const dogToFind = availableDogs.shift()
 
-    dogs.map(dog => {
+    dogs.map(dog => { // update local data array - not needed for this app
         if (dog.name === dogToFind) {
             dog.hasBeenSwiped = true
             dog.hasBeenLiked = status
         }
     })
 
-    dogContainer.innerHTML = dog.showStatusHtml(status)
+    dogContainer.innerHTML = dog.getDogHtml('getBadge')
     if (availableDogs.length > 0) { // if still more dogs
         setTimeout(() => {
             getNextDog()
             isWaiting = false
-
         }, 1000)
     } else {
         setTimeout(() => {
@@ -48,12 +47,14 @@ function setSwiped(status) {
 
 document.getElementById('like-btn').addEventListener('click', () => {
     if (!isWaiting) {
+        dog.isLiked()
         setSwiped(true)
     }
 })
 
 document.getElementById('nope-btn').addEventListener('click', () => {
     if (!isWaiting) {
+        dog.isRejected()
         setSwiped(false)
     }
 })
